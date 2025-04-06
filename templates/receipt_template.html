@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="receipt-container">
+        <h2 class="receipt-header">Receipt</h2>
+        <form method="POST">
+            <textarea name="text"
+                      placeholder="Format:\nOrder ID: 12345\nCustomer Name: John Doe\n====\nItem: Product A\nPrice: $25\n\nItem: Product B\nPrice: $10\n\nTotal:\nPrice: $35"></textarea><br>
+            <select name="template">
+                <option value="index">Cornell Notes</option>
+                <option value="corenll">Corenll Output</option>
+                <option value="prescription">Doctor Prescription</option>
+                <option value="receipt">Receipt</option>
+                <option value="custom">Custom Template</option>
+            </select>
+            <input type="submit" value="Convert">
+        </form>
+
+        {% if extracted_data.items %}
+            {% for item in extracted_data.items %}
+                <div class="receipt-section">
+                    <div class="receipt-item">
+                        <span class="receipt-item-name">{{ item.item }}</span>
+                        <span class="receipt-item-value">{{ item.price }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="receipt-total">
+                <p>Total: {{ extracted_data.total }}</p>
+            </div>
+        {% else %}
+            <div class="receipt-section">
+                 <p>No items found</p>
+            </div>
+        {% endif %}
+
+        <div class="receipt-footer">
+            <p>Thank you for using our service!</p>
+        </div>
+    </div>
+</body>
+</html>

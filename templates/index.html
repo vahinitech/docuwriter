@@ -1,42 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cornell Notes Converter</title>
+    <title>Text Conversion Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Cornell Notes Tool</h1>
+    <h1>Text Conversion Tool</h1>
     <form method="POST">
-        <textarea name="text" placeholder="Paste your text here.  Use headings like this:\nHeading Text\n====\nAnd separate paragraphs with double newlines."></textarea><br>
-        <input type="submit" value="Convert to Cornell Notes">
-        <button type="submit" name="template" value="vahini">Use Vahini Template</button>
+        <textarea name="text"
+                  placeholder="Paste your text here."></textarea><br>
+        <select name="template">
+            <option value="index">Cornell Notes</option>
+            <option value="corenll">Corenll Output</option>
+            <option value="prescription">Doctor Prescription</option>
+            <option value="receipt">Receipt</option>
+            <option value="custom">Custom Template</option>
+        </select>
+        <input type="submit" value="Convert">
     </form>
-
-    {% if cornell_pages %}
-        <h2>Cornell Notes Output</h2>
-        {% for page in cornell_pages %}
-            <div class="page">
-                <h3>{{ page.title }}</h3>
-                <div class="cornell-grid">
-                    <div class="notes">
-                        <strong>Main Idea/Notes:</strong><br>
-                        <p>{{ page.main_idea }}</p>
-                        <p><strong>Supporting Details:</strong> {{ page.supporting_details }}</p>
-                    </div>
-                    <div class="cues">
-                        <strong>Cues/Questions:</strong><br>
-                        <p>{{ page.cues }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-
-        {% if summary %}
-            <div class="summary">
-                <strong>Summary:</strong>
-                <p>{{ summary }}</p>
-            </div>
-        {% endif %}
-    {% endif %}
 </body>
 </html>

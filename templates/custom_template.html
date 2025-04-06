@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="custom-container">
+        <h1>Custom Template</h1>
+        <form method="POST">
+            <textarea name="text"
+                      placeholder="Paste your text here.  Use headings like this:\nHeading Text\n====\nAnd separate paragraphs with double newlines."></textarea><br>
+        <select name="template">
+            <option value="index">Cornell Notes</option>
+            <option value="corenll">Corenll Output</option>
+            <option value="prescription">Doctor Prescription</option>
+            <option value="receipt">Receipt</option>
+            <option value="custom">Custom Template</option>
+        </select>
+        <input type="submit" value="Convert">
+    </form>
+
+        {% if cornell_pages %}
+            {% for page in cornell_pages %}
+                <div class="custom-section">
+                    <h2 class="custom-title">{{ page.title }}</h2>
+                    <p class="custom-content"><strong>Main Idea:</strong> {{ page.main_idea }}</p>
+                    <p class="custom-content"><strong>Details:</strong> {{ page.supporting_details }}</p>
+                    <p class="custom-content"><strong>Questions:</strong> {{ page.cues }}</p>
+                </div>
+            {% endfor %}
+            {% if summary %}
+                <div class="summary">
+                    <strong>Summary:</strong>
+                    <p>{{ summary }}</p>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if analysis %}
+            <div class="analysis">
+                <h2>Text Analysis</h2>
+                <p><strong>Spelling Mistakes:</strong> {{ ", ".join(analysis.spelling_mistakes) if analysis.spelling_mistakes else "None" }}</p>
+                <p><strong>Intent:</strong> {{ analysis.intent }}</p>
+                <p><strong>Confidence:</strong> {{ analysis.confidence }}</p>
+                <p><strong>Sentiment:</strong> {{ analysis.sentiment }}</p>
+                <p><strong>Sentiment Confidence:</strong> {{ analysis.sentiment_confidence }}</p>
+                <p><strong>Classification:</strong> {{ analysis.classification }}</p>
+                <p><strong>Classification Confidence:</strong> {{ analysis.classification_confidence }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

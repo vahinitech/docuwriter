@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cornell Notes Output</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Cornell Notes</h1>
+    {% if cornell_pages %}
+        {% for page in cornell_pages %}
+            <div class="corenll-section">
+                <h2>{{ page.title }}</h2>
+                <div class="cornell-grid">
+                    <div class="corenll-main">
+                        <strong>Main Idea:</strong>
+                    </div>
+                    <div class="corenll-details">
+                        <p>{{ page.main_idea }}</p>
+                    </div>
+                    <div class="corenll-main">
+                        <strong>Supporting Details:</strong>
+                    </div>
+                    <div class="corenll-details">
+                        <p>{{ page.supporting_details }}</p>
+                    </div>
+                    <div class="corenll-main">
+                        <strong>Cues/Questions:</strong>
+                    </div>
+                    <div class="corenll-details">
+                        <p>{{ page.cues }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% if summary %}
+            <div class="summary">
+                <strong>Summary: </strong>
+                <p>{{ summary }}</p>
+            </div>
+        {% endif %}
+        {% if analysis %}
+            <div class="analysis">
+                <h2>Text Analysis</h2>
+                <p><strong>Spelling Mistakes:</strong> {{ ", ".join(analysis.spelling_mistakes) if analysis.spelling_mistakes else "None" }}</p>
+                <p><strong>Intent:</strong> {{ analysis.intent }}</p>
+                <p><strong>Confidence:</strong> {{ analysis.confidence }}</p>
+                <p><strong>Sentiment:</strong> {{ analysis.sentiment }}</p>
+                <p><strong>Sentiment Confidence:</strong> {{ analysis.sentiment_confidence }}</p>
+                <p><strong>Classification:</strong> {{ analysis.classification }}</p>
+                <p><strong>Classification Confidence:</strong> {{ analysis.classification_confidence }}</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>No content to display.</p>
+    {% endif %}
+</body>
+</html>

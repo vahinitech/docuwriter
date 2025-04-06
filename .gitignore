@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv
+venv/
+env/
+/instance
+
+# Flask
+/logs
+sessions/
+
+# Transformers
+/checkpoints
+
+# spaCy
+/en_core_web_sm*
+
+# IntelliJ
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Environment
+.env

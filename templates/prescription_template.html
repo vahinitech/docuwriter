@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor's Prescription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="prescription-container">
+        <h2 class="prescription-header">Doctor's Prescription</h2>
+        <p class="prescription-date">Date: {{  extracted_data.date  }}</p>
+        <p class="prescription-patient">Patient Name: {{ extracted_data.patient_name }}</p>
+
+        <form method="POST">
+            <textarea name="text"
+                      placeholder="Format:\nPatient Name: John Doe\n====\nMedicine 1: Paracetamol\nDosage: 500mg\nInstructions: Take twice daily after meals.\n\nMedicine 2: Amoxicillin\nDosage: 250mg\nInstructions: Take three times daily for 7 days."></textarea><br>
+            <select name="template">
+                <option value="index">Cornell Notes</option>
+                <option value="corenll">Corenll Output</option>
+                <option value="prescription">Doctor Prescription</option>
+                <option value="receipt">Receipt</option>
+                <option value="custom">Custom Template</option>
+            </select>
+            <input type="submit" value="Convert">
+        </form>
+
+        {% if extracted_data.medicines %}
+            {% for medicine in extracted_data.medicines %}
+                <div class="prescription-body">
+                    <p><span class="prescription-medicine_name">{{ medicine.name }}</span></p>
+                    <p class = "prescription-dosage">Dosage: {{ medicine.dosage }}</p>
+                    <p class = "prescription-instructions">Instructions: {{ medicine.instructions }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+             <div class="prescription-body">
+                    <p>No medicines found.</p>
+             </div>
+        {% endif %}
+    </div>
+</body>
+</html>
